@@ -3,6 +3,7 @@
 import pytest
 
 from bank_api.bank import Bank, Account
+from datetime import datetime
 
 
 @pytest.fixture
@@ -46,3 +47,19 @@ def test_cannot_modify_accounts_set(bank):
 
 # TODO: Add unit tests for bank.add_funds()
 
+def test_add_funds(bank):
+    name ="Test"
+    amount = 5
+    date_string = '21 June, 2018'
+    now = datetime.strptime(date_string, "%d %B, %Y")
+
+    bank.create_account('Test')
+    bank.add_funds(name, amount, now)
+
+    assert len(bank.transactions) == 1
+
+    transaction_list=list(bank.transactions)
+
+    assert transaction_list[0].account.name == name
+    assert transaction_list[0].date == now
+    assert transaction_list[0].amount == amount

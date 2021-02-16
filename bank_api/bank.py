@@ -43,8 +43,7 @@ class Bank:
                 return account
         raise ValueError('Account not found')
 
-    def add_funds(self, name: str, amount: int) -> None:
+    def add_funds(self, name: str, amount: int, now: datetime) -> None:
         """Add funds to the named account"""
         account = self.get_account(name)
-        now = datetime.now()
         self._transactions.add(Transaction(account, now, amount))
